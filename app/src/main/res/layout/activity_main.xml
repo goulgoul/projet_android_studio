@@ -7,13 +7,24 @@
     tools:context=".MainActivity">
 
     <TextView
-        android:id="@+id/GPS"
+        android:id="@+id/tvLocation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="En attente de coordonnées GPS..."
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.43" />
 
+    <Button
+        android:id="@+id/getLocationButton"
+        android:layout_width="174dp"
+        android:layout_height="wrap_content"
+        android:onClick="get_gps_coordinates"
+        android:text="Get current location"
+        app:layout_constraintBottom_toTopOf="@+id/tvLocation"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
