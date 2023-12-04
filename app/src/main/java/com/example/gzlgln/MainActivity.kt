@@ -12,10 +12,9 @@ import com.google.android.gms.location.LocationServices
 import com.google.firebase.crashlytics.buildtools.reloc.org.apache.http.HttpResponse
 import com.google.firebase.crashlytics.buildtools.reloc.org.apache.http.client.HttpClient
 import com.google.firebase.crashlytics.buildtools.reloc.org.apache.http.client.methods.HttpGet
-import com.google.firebase.crashlytics.buildtools.reloc.org.apache.http.impl.client.DefaultHttpClient
+import com.google.firebase.crashlytics.buildtools.reloc.org.apache.http.impl.client.HttpClientBuilder
 import com.google.firebase.crashlytics.buildtools.reloc.org.apache.http.util.EntityUtils
-import okhttp3.OkHttpClient
-import java.net.URL
+
 
 
 class MainActivity : AppCompatActivity()
@@ -23,9 +22,9 @@ class MainActivity : AppCompatActivity()
     private lateinit var fused_location_provider_client: FusedLocationProviderClient
     private lateinit var location_text_view: TextView
     private lateinit var weather_text_view: TextView
-    private lateinit var http_client: OkHttpClient
     private var latitude: String = ""
     private var longitude: String = ""
+    private var temperature: Float = 0.0f
 
 
     override fun onCreate(savedInstanceState: Bundle?)
@@ -77,7 +76,7 @@ class MainActivity : AppCompatActivity()
                 100)
             return
         }
-        val httpclient: HttpClient = DefaultHttpClient()
+        val httpclient: HttpClient = HttpClientBuilder.create().build()
         val httpget = HttpGet(weather_url)
 
         val response: HttpResponse = httpclient.execute(httpget)
