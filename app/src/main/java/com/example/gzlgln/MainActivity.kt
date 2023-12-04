@@ -2,16 +2,20 @@ package com.example.gzlgln
 
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
-import okhttp3.Callback
+import com.google.firebase.crashlytics.buildtools.reloc.org.apache.http.HttpResponse
+import com.google.firebase.crashlytics.buildtools.reloc.org.apache.http.client.HttpClient
+import com.google.firebase.crashlytics.buildtools.reloc.org.apache.http.client.methods.HttpGet
+import com.google.firebase.crashlytics.buildtools.reloc.org.apache.http.impl.client.DefaultHttpClient
+import com.google.firebase.crashlytics.buildtools.reloc.org.apache.http.util.EntityUtils
 import okhttp3.OkHttpClient
-import okhttp3.Request
-import java.io.IOException
+import java.net.URL
 
 
 class MainActivity : AppCompatActivity()
@@ -65,6 +69,7 @@ class MainActivity : AppCompatActivity()
     
     private fun get_weather()
     {
+        var weather_url = "https://api.open-meteo.com/v1/meteofrance?latitude=$latitude&longitude=$longitude&hourly=temperature_2m"
         if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.INTERNET) != PackageManager.PERMISSION_GRANTED)
         {
             ActivityCompat.requestPermissions(this,
@@ -72,18 +77,19 @@ class MainActivity : AppCompatActivity()
                 100)
             return
         }
-        http_client = OkHttpClient()
+        val httpclient: HttpClient = DefaultHttpClient()
+        val httpget = HttpGet(weather_url)
 
-        val request = Request.Builder()
-            .url("https://api.open-meteo.com/v1/meteofrance?latitude=$latitude&longitude=$longitude&hourly=temperature_2m")
-            .build()
-        http_client.newCall(request).execute().use {
-                reponse -> if (!reponse.isSuccessful) throw IOException("Unexpected code $reponse")
+        val response: HttpResponse = httpclient.execute(httpget)
 
-            for ((name, value) in reponse.headers()) println("$name: $value")
-
-            println(reponse.body!!.string())
+        if (response.getStatusLine().getStatusCode() === 200)
+        {
+            val server_response: String = EntityUtils.toString(response.getEntity())
+            Log.i("Server response", server_response)
         }
-
+        else
+        {
+            Log.i("Server response", "Failed to get server response")
+        }
     }
 }
