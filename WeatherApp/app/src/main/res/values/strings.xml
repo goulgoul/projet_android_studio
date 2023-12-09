@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">WeatherApp</string>
+    
+    <string name="title">Weather</string>
+    <string name="date">Lundi 9 décembre 2023</string>
+    <string name="location">Orléans</string>
+    <string name="sloc">Location</string>
+    <string name="Latitude">Latitude:</string>
+    <string name="Longitude">Longitude:</string>
+    <string name="tmp">83°C</string>
+
+    <string name="hour1">11am</string>
+    <string name="hour2">12am</string>
+    <string name="hour3">1pm</string>
+    <string name="hour4">2pm</string>
+    
+</resources>
