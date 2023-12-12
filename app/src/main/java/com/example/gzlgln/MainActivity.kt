@@ -7,14 +7,14 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import com.android.volley.Request
+import com.android.volley.Response
+import com.android.volley.toolbox.StringRequest
+import com.android.volley.toolbox.Volley
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
-import com.google.firebase.crashlytics.buildtools.reloc.org.apache.http.HttpResponse
-import com.google.firebase.crashlytics.buildtools.reloc.org.apache.http.client.HttpClient
-import com.google.firebase.crashlytics.buildtools.reloc.org.apache.http.client.methods.HttpGet
-import com.google.firebase.crashlytics.buildtools.reloc.org.apache.http.impl.client.HttpClientBuilder
-import com.google.firebase.crashlytics.buildtools.reloc.org.apache.http.util.EntityUtils
-
+import org.json.JSONArray
+import org.json.JSONObject
 
 
 class MainActivity : AppCompatActivity()
@@ -62,33 +62,27 @@ class MainActivity : AppCompatActivity()
                 longitude = it.longitude.toString()
                 val textGPS = "Latitude : " + latitude + ", longitude : " + longitude
                 location_text_view.text = textGPS
+                get_weather()
             }
         }
     }
-    
-    private fun get_weather()
-    {
-        var weather_url = "https://api.open-meteo.com/v1/meteofrance?latitude=$latitude&longitude=$longitude&hourly=temperature_2m"
-        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.INTERNET) != PackageManager.PERMISSION_GRANTED)
-        {
-            ActivityCompat.requestPermissions(this,
-                arrayOf(android.Manifest.permission.INTERNET),
-                100)
-            return
-        }
-        val httpclient: HttpClient = HttpClientBuilder.create().build()
-        val httpget = HttpGet(weather_url)
 
-        val response: HttpResponse = httpclient.execute(httpget)
+    fun get_weather() {
 
-        if (response.getStatusLine().getStatusCode() === 200)
-        {
-            val server_response: String = EntityUtils.toString(response.getEntity())
-            Log.i("Server response", server_response)
-        }
-        else
-        {
-            Log.i("Server response", "Failed to get server response")
-        }
+        val queue = Volley.newRequestQueue(this)
+        var weather_url = "https://api.open-meteo.com/v1/meteofrance?latitude=$latitude&longitude=$longitude&current=temperature_2m"
+
+        // Request a string response from the provided URL.
+        val stringRequest = StringRequest(Request.Method.GET, weather_url,
+            Response.Listener<String> { response ->
+                var weather_json = JSONObject(response)
+                var current_values = weather_json.getJSONObject("current")
+                var current_temperature = current_values.get("temperature_2m")
+                weather_text_view.text = "Température actuelle : $current_temperature °C"
+            },
+            Response.ErrorListener { weather_text_view.text = "That didn't work!" })
+
+        // Add the request to the RequestQueue.
+        queue.add(stringRequest)
     }
 }

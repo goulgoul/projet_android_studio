@@ -13,5 +13,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "GazelGoulin"
+rootProject.name = "locmeteo"
 include(":app")

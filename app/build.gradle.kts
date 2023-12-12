@@ -5,7 +5,7 @@ plugins {
 
 android {
     namespace = "com.example.gzlgln"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "com.example.gzlgln"
@@ -37,19 +37,27 @@ android {
 
 dependencies {
 
-    implementation("androidx.core:core-ktx:1.9.0")
+    implementation("androidx.core:core-ktx:1.12.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
-    implementation("com.google.android.material:material:1.9.0")
+    implementation("com.google.android.material:material:1.10.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
-    implementation("com.google.firebase:firebase-crashlytics-buildtools:2.9.9")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.2")
 
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+//
+//    val ktor_version: String by project
 
+//    dependencies {
+//        implementation("io.ktor:ktor-client-core:$ktor_version")
+//        implementation("io.ktor:ktor-client-cio:$ktor_version")
+//        implementation("io.ktor:ktor-client-content-negotiation:$ktor_version")
+//        implementation("io.ktor:ktor-serialization-kotlinx-json:$ktor_version")
+//    }
 
-    // OkHTTP
-    implementation("com.squareup.okhttp3:okhttp:3.10.0")
+    //Volley networking library
+    implementation("com.android.volley:volley:1.2.1")
 
     //FusedLocationProvider
     implementation("com.google.android.gms:play-services-location:21.0.1")
