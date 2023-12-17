@@ -33,7 +33,6 @@ class MainActivity : AppCompatActivity()
         setContentView(R.layout.activity_main)
 
         fused_location_provider_client = LocationServices.getFusedLocationProviderClient(this)
-        location_text_view = findViewById(R.id.tvLocation)
         weather_text_view = findViewById(R.id.tvWeather)
 
         val boutonGPS = findViewById<Button>(R.id.getLocationButton)
@@ -60,8 +59,7 @@ class MainActivity : AppCompatActivity()
             {
                 latitude = it.latitude.toString()
                 longitude = it.longitude.toString()
-                val textGPS = "Latitude : " + latitude + ", longitude : " + longitude
-                location_text_view.text = textGPS
+
                 get_weather()
             }
         }
@@ -78,9 +76,9 @@ class MainActivity : AppCompatActivity()
                 var weather_json = JSONObject(response)
                 var current_values = weather_json.getJSONObject("current")
                 var current_temperature = current_values.get("temperature_2m")
-                weather_text_view.text = "Température actuelle : $current_temperature °C"
+                weather_text_view.text = "Il fait actuellement $current_temperature °C dehors."
             },
-            Response.ErrorListener { weather_text_view.text = "That didn't work!" })
+            Response.ErrorListener { weather_text_view.text = "SIKE!" })
 
         // Add the request to the RequestQueue.
         queue.add(stringRequest)
