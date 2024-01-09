@@ -2,7 +2,7 @@
 
 LocMétéo est une application donnant la météo en fonction de votre localisation. Elle possède deux thèmes différents, un thème clair pour la journée et un thème sombre pour la nuit. 
 
-Le fonctionnement de l'application est très simple. Il y a un bouton au centre de l'écran, et lorsque l'utilisateur appuie dessus l'écran affiche la température extérieure.
+Le fonctionnement de l'application est très simple. Il y a un bouton au centre de l'écran dont le rôle est d'afficher la température extérieure lorsque l'utilisateur appuie dessus.
 
 ## Acquisition des coordonnées de l'utilisateur
 
